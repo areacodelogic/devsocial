@@ -239,7 +239,62 @@ router.delete('/experience/:exp_id', authorize, async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
+
 });
+
+// @route   PUT api/profile/experience/:exp_id
+// @desc    Edit profile experience
+// @access  Private
+
+router.put(
+  '/experience/:exp_id',
+  [
+    authorize,
+    [
+      check('title', 'Title is required').not().isEmpty(),
+      check('company', 'Company is required').not().isEmpty(),
+      check('from', 'From Date is required').not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      let profile = await Profile.findOne({ user: req.user.id });
+      if (profile) {
+        profile = await Profile.findOneAndUpdate(
+          {
+            experience: { $elemMatch: { _id: req.params.exp_id } },
+          },
+          {
+            $set: {
+              'experience.$.current': req.body.current,
+              'experience.$.title': req.body.title,
+              'experience.$.company': req.body.company,
+              'experience.$.location': req.body.location,
+              'experience.$.from': req.body.from,
+              'experience.$.to': req.body.to,
+              'experience.$.description': req.body.description,
+            },
+          },
+          { new: true }
+        );
+      }
+      res.json(profile);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: 'Server error' });
+    }
+  }
+);
+
+
+module.exports = router;
+
+
 
 // @todo get the user to be able to update their experience
 
@@ -288,5 +343,3 @@ router.delete('/experience/:exp_id', authorize, async (req, res) => {
 //     }
 //   }
 // );
-
-module.exports = router;
