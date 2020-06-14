@@ -72,7 +72,12 @@ router.post(
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
     if (skills) {
-      profileFields.skills = skills.split(',').map((skill) => skill.trim());
+      Array.isArray(skills)
+        ? skills
+        : (profileFields.skills = skills
+          .split(",")
+          .map((skill) => " " + skill.trim()))
+      // profileFields.skills = skills.split(',').map((skill) => " " + skill.trim());
     }
 
     //Build social object
@@ -223,50 +228,50 @@ router.put(
 // @desc    Edit profile experience
 // @access  Private
 
-router.put(
-  '/experience/:exp_id',
-  [
-    authorize,
-    [
-      check('title', 'Title is required').not().isEmpty(),
-      check('company', 'Company is required').not().isEmpty(),
-      check('from', 'From Date is required').not().isEmpty(),
-    ],
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+// router.put(
+//   '/experience/:exp_id',
+//   [
+//     authorize,
+//     [
+//       check('title', 'Title is required').not().isEmpty(),
+//       check('company', 'Company is required').not().isEmpty(),
+//       check('from', 'From Date is required').not().isEmpty(),
+//     ],
+//   ],
+//   async (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
 
-    try {
-      let profile = await Profile.findOne({ user: req.user.id });
-      if (profile) {
-        profile = await Profile.findOneAndUpdate(
-          {
-            experience: { $elemMatch: { _id: req.params.exp_id } },
-          },
-          {
-            $set: {
-              'experience.$.current': req.body.current,
-              'experience.$.title': req.body.title,
-              'experience.$.company': req.body.company,
-              'experience.$.location': req.body.location,
-              'experience.$.from': req.body.from,
-              'experience.$.to': req.body.to,
-              'experience.$.description': req.body.description,
-            },
-          },
-          { new: true }
-        );
-      }
-      res.json(profile);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ msg: 'Server error' });
-    }
-  }
-);
+//     try {
+//       let profile = await Profile.findOne({ user: req.user.id });
+//       if (profile) {
+//         profile = await Profile.findOneAndUpdate(
+//           {
+//             experience: { $elemMatch: { _id: req.params.exp_id } },
+//           },
+//           {
+//             $set: {
+//               'experience.$.current': req.body.current,
+//               'experience.$.title': req.body.title,
+//               'experience.$.company': req.body.company,
+//               'experience.$.location': req.body.location,
+//               'experience.$.from': req.body.from,
+//               'experience.$.to': req.body.to,
+//               'experience.$.description': req.body.description,
+//             },
+//           },
+//           { new: true }
+//         );
+//       }
+//       res.json(profile);
+//     } catch (error) {
+//       console.error(error);
+//       return res.status(500).json({ msg: 'Server error' });
+//     }
+//   }
+// );
 
 // @route   DELETE api/profile/experience/:exp_id
 // @desc    Delete experience from profile
@@ -443,6 +448,5 @@ module.exports = router;
 //     }
 //   }
 // );
-
 
 /** **/
