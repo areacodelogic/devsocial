@@ -77,6 +77,7 @@ router.post(
         : (profileFields.skills = skills
           .split(",")
           .map((skill) => " " + skill.trim()))
+      // @BUG FIX
       // profileFields.skills = skills.split(',').map((skill) => " " + skill.trim());
     }
 
