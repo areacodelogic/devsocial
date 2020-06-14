@@ -1,11 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
-import {setAlert} from '../../actions/alert';
+import { connect } from 'react-redux';
+// actions
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+
 import PropTypes from 'prop-types';
 
-
-const Register = ({setAlert}) => {
+const Register = ({ setAlert, register }) => {
   const [formData, setformData] = useState({
     name: '',
     email: '',
@@ -24,9 +26,13 @@ const Register = ({setAlert}) => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (password !== password2) {
-      setAlert("Passwords don't match", "danger")
+      setAlert("Passwords don't match", 'danger');
     } else {
-      console.log("success")
+      register({
+        name,
+        email,
+        password,
+      });
     }
   };
 
@@ -44,7 +50,7 @@ const Register = ({setAlert}) => {
             name='name'
             value={name}
             onChange={(e) => handleChange(e)}
-            required
+            
           />
         </div>
         <div className='form-group'>
@@ -54,7 +60,6 @@ const Register = ({setAlert}) => {
             name='email'
             value={email}
             onChange={(e) => handleChange(e)}
-            required
           />
           <small className='form-text'>
             This site uses Gravatar, so if you wat a profile image, use a
@@ -65,7 +70,6 @@ const Register = ({setAlert}) => {
           <input
             type='password'
             placeholder='Password'
-            minLength='6'
             name='password'
             value={password}
             onChange={(e) => handleChange(e)}
@@ -75,7 +79,6 @@ const Register = ({setAlert}) => {
           <input
             type='password'
             placeholder='Confirm Password'
-            minLength='6'
             name='password2'
             value={password2}
             onChange={(e) => handleChange(e)}
@@ -90,41 +93,39 @@ const Register = ({setAlert}) => {
   );
 };
 
-Register.propTypes ={
+Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-}
+  register: PropTypes.func.isRequired,
+};
 
-
-export default connect(null, {setAlert})(Register);
-
-
+export default connect(null, { setAlert, register })(Register);
 
 // Checked to see if we hit the backend and receive a token test
 
-  // const handleSubmit = async (evt) => {
-  //   evt.preventDefault();
-  //   if (password !== password2) {
-  //     console.log('Passwords do not match');
-  //   } else {
-  //     const newUser = {
-  //       name,
-  //       email,
-  //       password,
-  //     };
+// const handleSubmit = async (evt) => {
+//   evt.preventDefault();
+//   if (password !== password2) {
+//     console.log('Passwords do not match');
+//   } else {
+//     const newUser = {
+//       name,
+//       email,
+//       password,
+//     };
 
-  //     try {
-  //       const config = {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //       };
+//     try {
+//       const config = {
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//       };
 
-  //       const body = JSON.stringify(newUser);
+//       const body = JSON.stringify(newUser);
 
-  //       const res = await axios.post('/api/users', body, config);
-  //       console.log(res.data);
-  //     } catch (err) {
-  //       console.error(err.response.data);
-  //     }
-  //   }
-  // };
+//       const res = await axios.post('/api/users', body, config);
+//       console.log(res.data);
+//     } catch (err) {
+//       console.error(err.response.data);
+//     }
+//   }
+// };
