@@ -19,13 +19,13 @@ export default function (state = initialState, action) {
         profile: payload,
         loading: false,
       };
-    
+
     case GET_PROFILES:
       return {
-        ...state, 
+        ...state,
         profiles: payload,
-        loading: false
-      }
+        loading: false,
+      };
 
     case PROFILE_ERROR:
       return {
@@ -33,21 +33,21 @@ export default function (state = initialState, action) {
         error: payload,
         loading: false,
       };
-      
+
     case CLEAR_PROFILE:
       return {
         ...state,
         profile: null,
         repos: [],
-        loading: false
-      }
+        loading: false,
+      };
 
-    case GET_REPOS: 
+    case GET_REPOS:
       return {
         ...state,
         repos: payload,
-        loading: false
-      }
+        loading: false,
+      };
     default:
       return state;
   }
