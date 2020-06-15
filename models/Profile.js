@@ -46,7 +46,7 @@ const ProfileSchema = new mongoose.Schema({
         required: true,
       },
       to: {
-        types: Date,
+        type: Date,
       },
       current: {
         type: Boolean,
@@ -76,7 +76,8 @@ const ProfileSchema = new mongoose.Schema({
         required: true,
       },
       to: {
-        types: Date,
+        type: Date,
+        
       },
       current: {
         type: Boolean,

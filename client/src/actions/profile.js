@@ -78,7 +78,7 @@ export const addExperience = (formData, history) => async (dispatch) => {
 
     dispatch(setAlert('Experience Added', 'success'));
 
-    history.push('/dashboared')
+    history.push('/dashboard')
   } catch (err) {
     const errors = err.response.data.errors;
 
