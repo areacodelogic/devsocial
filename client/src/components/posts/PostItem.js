@@ -13,13 +13,13 @@ const PostItem = ({
   post: { _id, text, name, avatar, user, likes, comments, date },
 }) => {
   return (
-    <Fragment>
-      <div className='post bg-white p-1 my-1'>
+    <Fragment >
+      <div className='post bg-white p-1 my-1' >
         <div>
-          <a href='profile.html'>
+          <Link to={`/profile/${user}`}>
             <img className='round-img' src={avatar} alt='' />
             <h4>{name}</h4>
-          </a>
+          </Link>
         </div>
 
         <div>
@@ -40,7 +40,6 @@ const PostItem = ({
             className='btn btn-light'>
             <i className='fas fa-thumbs-down'></i>
           </button>
-
           <Link to={`/posts/${_id}`} className='btn btn-primary'>
             Discussion{' '}
             {comments.length > 0 && (

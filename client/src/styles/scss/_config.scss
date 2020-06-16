@@ -24,6 +24,7 @@ $max-width: 1100px;
 
 $spaceamounts: (1,2,3,4,5);
 
+
 @each $space in $spaceamounts {
     //All around margin
     .m-#{$space}{
