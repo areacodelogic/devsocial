@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://timothy:timothy123@devsocial-kk2if.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "githubClientId": "1c6fa316fce007e0128b",
+  "githubToken": "3b57643904d5ecd304917b72d33a31e6d1d327f4"
+}
