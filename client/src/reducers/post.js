@@ -16,6 +16,7 @@ const initialState = {
   error: {},
 };
 
+
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
@@ -72,6 +73,7 @@ export default function (state = initialState, action) {
       }
 
     case REMOVE_COMMENT:
+      console.log(state)
       return {
         ...state,
         post: {
@@ -80,6 +82,8 @@ export default function (state = initialState, action) {
           loading: false
         }
       }
+
+
     default:
       return state;
   }
