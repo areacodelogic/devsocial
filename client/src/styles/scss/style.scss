@@ -2,7 +2,6 @@
 @import 'utilities';
 @import 'forms';
 
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,8 +14,6 @@ body {
   line-height: 1.6;
   background-color: #fff;
   color: #333;
-  
-
 }
 
 a {
@@ -64,10 +61,15 @@ img {
 // Landing
 
 .landing {
-  position: relative;
   background: url('../dist/css/landing.jpg') no-repeat center center/cover;
   height: 100vh;
-  
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+
   &-inner {
     color: #fff;
     height: 100%;
@@ -78,8 +80,6 @@ img {
     align-items: center;
     justify-content: center;
     text-align: center;
-      
-
   }
 }
 
@@ -159,10 +159,10 @@ img {
 
   .profile-github {
     grid-area: github;
-    
+
     .repo {
       display: flex;
-    
+
       & > div:first-child {
         flex: 7;
         flex-basis: 70%;
@@ -171,17 +171,16 @@ img {
         flex: 3;
         flex-basis: 20%;
       }
-
     }
   }
 }
 
-// Posts Page 
+// Posts Page
 .post-form-header {
   padding: 0.5rem;
 }
 
-.post{
+.post {
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-gap: 2rem;
@@ -196,6 +195,4 @@ img {
   }
 }
 
-
 @import 'mobile';
-

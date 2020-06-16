@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,8 +9,10 @@ const Landing = ({isAuthenticated}) => {
     return <Redirect to="/dashboard" />
   }
     return (
+      <Fragment>
+      <div className="parentlanding">
         <section className='landing'>
-          <div className='dark-overlay'>
+          <div className='fixthis dark-overlay' >
             <div className='landing-inner'>
               <h1 className='x-large'>Developer Connector</h1>
               <p className='lead'>
@@ -28,7 +30,8 @@ const Landing = ({isAuthenticated}) => {
             </div>
           </div>
         </section>
-      
+        </div>
+      </Fragment>
     );
 }
 
