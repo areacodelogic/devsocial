@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import { GET_PROFILE, GET_PROFILES, PROFILE_ERROR, UPDATE_PROFILE, CLEAR_PROFILE, ACCOUNT_DELETED, GET_REPOS } from './types';
+import {
+  GET_PROFILE,
+  GET_PROFILES,
+  PROFILE_ERROR,
+  UPDATE_PROFILE,
+  CLEAR_PROFILE,
+  ACCOUNT_DELETED,
+  GET_REPOS,
+} from './types';
 
 //Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
@@ -13,17 +21,26 @@ export const getCurrentProfile = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
+    // If a guest user browses a dev profile and then registers, 
+    // the browsed users profile data is still in the "profile"
+    // state and the newly registered user then sees and can edit the users info
+    // A fix is to dispatch CLEAR_PROFILE which will essentially set profile to null
+    dispatch({ type: CLEAR_PROFILE });
+
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status,
+      },
     });
   }
 };
 
 // Get all profiles
 export const getProfiles = () => async (dispatch) => {
-  dispatch({type: CLEAR_PROFILE});
-  
+  dispatch({ type: CLEAR_PROFILE });
+
   try {
     const res = await axios.get('/api/profile');
 
@@ -41,7 +58,7 @@ export const getProfiles = () => async (dispatch) => {
 
 // Get Github repos
 export const getGithubRepos = (username) => async (dispatch) => {
-    try {
+  try {
     const res = await axios.get(`/api/profile/github/${username}`);
 
     dispatch({
@@ -220,10 +237,9 @@ export const deleteAccount = (id) => async (dispatch) => {
   if (window.confirm('Are you sure?  This can NOT be undone!')) {
     try {
       await axios.delete(`api/profile`);
-      
+
       dispatch({ type: CLEAR_PROFILE });
-      dispatch({ type: ACCOUNT_DELETED})
-      
+      dispatch({ type: ACCOUNT_DELETED });
 
       dispatch(setAlert('Your account has been permanantly deleted'));
     } catch (err) {
@@ -234,5 +250,3 @@ export const deleteAccount = (id) => async (dispatch) => {
     }
   }
 };
-
-
