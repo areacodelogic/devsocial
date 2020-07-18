@@ -1,6 +1,6 @@
 ### devSocial
 
-A full-stack social network for Developers to connect with eachother.  
+A full-stack social network for Developers to create profiles/portfolios, share posts and get help from other developers.
 
 Users can create an account, log-in, and meet folks within their field.
 
